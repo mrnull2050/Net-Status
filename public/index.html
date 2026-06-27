@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>بندرعباس مال</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container-box">
+<div class="tabs">
+    <button class="tab active" onclick="switchTab('future')">روزهای آینده</button>
+    <button class="tab" onclick="switchTab('past')">۷ روز گذشته</button>
+</div>
+        <div class="header">
+            <img src="https://bandarabbasmall.com/images/logo/logo.png" class="logo">
+            <h1>بندرعباس مال</h1>
+            <p class="subtitle">سیستم مدیریت انقضای کاربران</p>
+            <div class="time-box">
+                <span id="date"></span>
+                <span id="time"></span>
+            </div>
+        </div>
+
+      <div class="table-container">
+
+    <!-- آینده -->
+    <table id="futureTable">
+        <thead>
+            <tr>
+                <th>مغازه</th>
+                <th>پلاک</th>
+                <th>تاریخ اتمام</th>
+                <th>وضعیت</th>
+            </tr>
+        </thead>
+        <tbody id="futureBody"></tbody>
+    </table>
+
+    <!-- گذشته -->
+    <table id="pastTable" style="display:none;">
+        <thead>
+            <tr>
+                <th>مغازه</th>
+                <th>پلاک</th>
+                <th>تاریخ اتمام</th>
+                <th>وضعیت</th>
+            </tr>
+        </thead>
+        <tbody id="pastBody"></tbody>
+    </table>
+
+</div>
+    
+
+<script>
+let futureData = [];
+let pastData = [];
+
+async function loadData() {
+    const res = await fetch('/api/expired');
+    const data = await res.json();
+
+    // 👇 مطابق API جدید
+    futureData = data.future || [];
+    pastData = data.past || [];
+
+    renderFuture();
+    renderPast();
+}
+
+function renderFuture() {
+    const body = document.getElementById('futureBody');
+    body.innerHTML = '';
+
+    if (futureData.length === 0) {
+        body.innerHTML = `<tr><td colspan="4" class="empty">داده‌ای وجود ندارد</td></tr>`;
+        return;
+    }
+
+    futureData.forEach(user => {
+        body.innerHTML += rowTemplate(user);
+    });
+}
+
+function renderPast() {
+    const body = document.getElementById('pastBody');
+    body.innerHTML = '';
+
+    if (pastData.length === 0) {
+        body.innerHTML = `<tr><td colspan="4" class="empty">داده‌ای برای ۷ روز گذشته نیست</td></tr>`;
+        return;
+    }
+
+    pastData.forEach(user => {
+        body.innerHTML += rowTemplate(user);
+    });
+}
+
+function rowTemplate(user) {
+    let statusClass =
+        user.status === 'امروز' ? 'today' :
+        user.status === 'فردا' ? 'tomorrow' :
+        'later';
+
+    return `
+        <tr>
+            <td>${user.shop}</td>
+            <td>${user.plate}</td>
+            <td>${user.endDate}</td>
+            <td><span class="status ${statusClass}">${user.status}</span></td>
+        </tr>
+    `;
+}
+
+function switchTab(tab) {
+    document.getElementById('futureTable').style.display = tab === 'future' ? 'table' : 'none';
+    document.getElementById('pastTable').style.display = tab === 'past' ? 'table' : 'none';
+
+    document.querySelectorAll('.tab').forEach(btn => btn.classList.remove('active'));
+
+    if (tab === 'future') document.querySelectorAll('.tab')[0].classList.add('active');
+    else document.querySelectorAll('.tab')[1].classList.add('active');
+}
+
+/* ❌ حذف خطای updateTime (فعلاً اگر نداریش) */
+
+// اگر میخوای ساعت داشته باشی اینو فعال کن:
+function updateTime() {
+    const now = new Date();
+
+    document.getElementById('date').innerText = now.toLocaleDateString('fa-IR', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+
+    document.getElementById('time').innerText = now.toLocaleTimeString('fa-IR');
+}
+
+setInterval(updateTime, 1000);
+updateTime();
+
+loadData();
+</script>
+
+</body>
+
+</html>

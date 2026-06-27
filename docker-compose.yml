@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  net-mall-web:
+    build: .
+    container_name: net-mall-web
+    ports:
+      - "3015:3015"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./users.xlsx:/app/users.xlsx

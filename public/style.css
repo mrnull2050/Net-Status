@@ -1,0 +1,134 @@
+@font-face {
+  font-family: 'iransance';
+  src: local('iransance'), url('./IRANSANS-MEDIUM.TTF') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+* {
+  font-family: 'iransance';
+}
+
+body {
+    /* font-family: 'Vazir', sans-serif; */
+    background-color: #f3f4f6; /* پس‌زمینه خاکستری روشن */
+    color: #1f2937;
+}
+
+.container-box {
+    background-color: #ffffff; /* پس‌زمینه سفید */
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    max-width: 800px;
+    margin: auto;
+    text-align: center;
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1rem;
+}
+
+.header h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1e40af; /* رنگ آبی تیره */
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: #6b7280; /* رنگ خاکستری */
+}
+
+.table-container {
+    margin-top: 2rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse; /* حذف فاصله بین سلول‌ها */
+}
+
+th, td {
+    border: 1px solid #d1d5db; /* حاشیه خاکستری */
+    padding: 12px;
+    text-align: right; /* راست‌چین کردن متن */
+}
+
+th {
+    background-color: #e5e7eb; /* رنگ پس‌زمینه سرستون */
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9fafb; /* رنگ پس‌زمینه ردیف‌های زوج */
+}
+
+.empty {
+    text-align: center;
+}
+
+.status {
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.today {
+    background-color: #f87171; /* رنگ قرمز برای امروز */
+    color: white;
+}
+
+.tomorrow {
+    background-color: #fbbf24; /* رنگ زرد برای فردا */
+}
+
+.later {
+    background-color: #34d399; /* رنگ سبز برای بعداً */
+}
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.tab {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    background: #eee;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.tab.active {
+    background: #2c3e50;
+    color: white;
+}
+
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-container th,
+.table-container td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.status {
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+
+.status.today { background: #e74c3c; color: white; }
+.status.tomorrow { background: #f39c12; color: white; }
+.status.later { background: #3498db; color: white; }
+
+.empty {
+    text-align: center;
+    padding: 20px;
+    color: #888;
+}
